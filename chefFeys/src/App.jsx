@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/home/Home";
 import Favorites from "./pages/favorites/Favorites";
@@ -9,6 +9,9 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
+  const [favorite, setFavorite] = useState([]);
+
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     try {
@@ -21,6 +24,7 @@ const App = () => {
         setRecipeList(data?.data?.recipes);
         setIsLoading(false);
         setSearch("");
+        navigate("/");
       }
       console.log(data);
     } catch (e) {
@@ -42,8 +46,14 @@ const App = () => {
           path="/"
           element={<Home isLoading={isLoading} recipeList={recipeList} />}
         />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/recipe-item/:id" element={<Details />} />
+        <Route
+          path="/favorites"
+          element={<Favorites favorite={favorite} setFavorite={setFavorite} />}
+        />
+        <Route
+          path="/recipe-item/:id"
+          element={<Details favorite={favorite} setFavorite={setFavorite} />}
+        />
       </Routes>
     </div>
   );

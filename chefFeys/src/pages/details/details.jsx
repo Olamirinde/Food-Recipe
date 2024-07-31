@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const Details = () => {
+const Details = ({ favorite, setFavorite }) => {
   const { id } = useParams();
   const [recipeDetailsData, setRecipeDetailsData] = useState(null);
-  const [favorite, setFavorite] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -100,7 +100,7 @@ const Details = () => {
             {recipe.title || "Untitled Recipe"}
           </h3>
           <div>
-            <button
+            {/* <button
               onClick={() => handleAddToFavorite(recipe)}
               className={`p-3 px-6 rounded-lg text-sm uppercase font-medium tracking-wider mt-3 inline-block shadow-md ${
                 favorite.some((item) => item.id === recipe.id)
@@ -108,9 +108,18 @@ const Details = () => {
                   : "bg-black text-white"
               }`}
               disabled={favorite.some((item) => item.id === recipe.id)}>
-              {favorite.some((item) => item.id === recipe.id)
+              {favorite.some((item) => item.id === recipe.id) !== -1
                 ? "Already in Favorites"
                 : "Save as favorite"}
+            </button> */}
+            <button
+              onClick={() => handleAddToFavorite(recipe)}
+              className="p-3 px-6 rounded-lg text-sm uppercase font-medium tracking-wider mt-3 inline-block shadow-md">
+              {favorite &&
+              favorite.length > 0 &&
+              favorite.findIndex((item) => item.id === recipe.id) !== -1
+                ? "Remove from favorites"
+                : "Add to favorite"}
             </button>
           </div>
         </div>
