@@ -19,7 +19,7 @@ const Details = () => {
         }
         const data = await response.json();
         console.log(data);
-        setRecipeDetailsData(data);
+        setRecipeDetailsData(data.data);
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch recipe details:", error);
@@ -54,12 +54,26 @@ const Details = () => {
     return <div className="text-center py-10">Error: {error}</div>;
   }
 
-  if (!recipeDetailsData || !recipeDetailsData.recipe) {
+  if (loading) {
+    return <div className="text-center py-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-10">Error: {error}</div>;
+  }
+
+  if (!recipeDetailsData) {
     return <div className="text-center py-10">No data available</div>;
   }
 
-  const { recipe } = recipeDetailsData;
+  if (!recipeDetailsData || !recipeDetailsData.recipe) {
+    return <div className="text-center py-10">No data available</div>;
+  }
+  const recipe = recipeDetailsData.recipe;
 
+  if (!recipe) {
+    return <div className="text-center py-10">No recipe details available</div>;
+  }
   return (
     <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
@@ -72,7 +86,7 @@ const Details = () => {
                 className="w-full h-full object-cover block group-hover:scale-105 duration-300"
               />
             ) : (
-              <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+              <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 ">
                 No Image Available
               </div>
             )}
