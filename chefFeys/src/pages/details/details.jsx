@@ -114,7 +114,7 @@ const Details = ({ favorite, setFavorite }) => {
             </button> */}
             <button
               onClick={() => handleAddToFavorite(recipe)}
-              className="p-3 px-6 rounded-lg text-sm uppercase font-medium tracking-wider mt-3 inline-block shadow-md">
+              className="p-3 px-6 rounded-lg bg-black text-white text-sm uppercase font-medium tracking-wider mt-3 inline-block shadow-md">
               {favorite &&
               favorite.length > 0 &&
               favorite.findIndex((item) => item.id === recipe.id) !== -1
